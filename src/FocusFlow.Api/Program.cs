@@ -1,13 +1,14 @@
-using FocusFlow.Api.Persistence.Context;
-using Microsoft.EntityFrameworkCore;
+using FocusFlow.Api;
+using FocusFlow.Api.Features.Auth.Register;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<FocusFlowDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
 
 app.MapGet("/", () => "FocusFlow API");
+
+app.MapRegisterEndpoint();
 
 app.Run();  
