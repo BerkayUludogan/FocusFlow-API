@@ -92,12 +92,8 @@ public static class ServiceRegistration
 
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
-
-
         services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
         services.AddScoped<IAuthBusinessRules, AuthBusinessRules>();
-
-
 
         services.AddDbContext<FocusFlowDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
