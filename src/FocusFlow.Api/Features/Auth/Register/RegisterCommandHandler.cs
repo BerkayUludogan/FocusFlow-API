@@ -8,19 +8,12 @@ using MediatR;
 namespace FocusFlow.Api.Features.Auth.Register;
 
 public sealed class RegisterCommandHandler(FocusFlowDbContext dbContext,
-    IValidator<RegisterCommandRequest> validator,
     IAuthBusinessRules authBusinessRules)
     : IRequestHandler<RegisterCommandRequest, RegisterCommandResponse>
 {
 
     public async Task<RegisterCommandResponse> Handle(RegisterCommandRequest request, CancellationToken cancellationToken)
     {
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-            throw new RequestValidationException(
-            validationResult.Errors.Select(error => error.ErrorMessage).ToList());
-
         var normalizedEmail = request.Email.Trim().ToLowerInvariant();
         var normalizedDisplayName = request.DisplayName.Trim();
 
