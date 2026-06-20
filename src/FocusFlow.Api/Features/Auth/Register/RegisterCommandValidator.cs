@@ -14,8 +14,8 @@ namespace FocusFlow.Api.Features.Auth.Register
 
             RuleFor(request => request.Password)
                 .NotEmpty()
-                .MinimumLength(8)
-                .MaximumLength(100);
+                .MinimumLength(UserFieldLengths.PasswordMin)
+                .MaximumLength(UserFieldLengths.Password);
 
             RuleFor(request => request.DisplayName)
                 .NotEmpty()
