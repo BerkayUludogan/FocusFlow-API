@@ -6,10 +6,26 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationServices(builder.Configuration);
 
-var app = builder.Build();
 
+
+
+var app = builder.Build();
+#region Middlewares
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-app.MapGet("/", () => "FocusFlow API");
+#endregion
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHsts();
+}
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+ 
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRegisterEndpoint();
 
