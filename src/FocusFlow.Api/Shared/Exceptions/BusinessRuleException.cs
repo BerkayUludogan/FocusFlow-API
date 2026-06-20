@@ -1,6 +1,11 @@
-﻿namespace FocusFlow.Api.Shared.Exceptions;
+﻿using System.Net;
+
+namespace FocusFlow.Api.Shared.Exceptions;
+
 public sealed class BusinessRuleException : BaseException
 {
     public BusinessRuleException(string messageKey)
-             : base(messageKey, 422) { }
+        : base(messageKey, (int)HttpStatusCode.UnprocessableEntity)
+    {
+    }
 }

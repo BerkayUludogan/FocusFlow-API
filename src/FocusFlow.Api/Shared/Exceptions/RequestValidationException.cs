@@ -1,11 +1,11 @@
-﻿namespace FocusFlow.Api.Shared.Exceptions;
+﻿using System.Net;
+
+namespace FocusFlow.Api.Shared.Exceptions;
 
 public sealed class RequestValidationException : BaseException
 {
-    public RequestValidationException(string messageKey)
-            : base(new List<string> { messageKey }, 400) { }
-
-    public RequestValidationException(List<string> messageKeys)
-        : base(messageKeys, 400) { }
+    public RequestValidationException(List<string> errors)
+        : base(errors, (int)HttpStatusCode.BadRequest)
+    {
+    }
 }
-
