@@ -1,7 +1,8 @@
 ﻿using FluentValidation;
+using FocusFlow.Api.Common.Abstractions.Security;
 using FocusFlow.Api.Common.Behaviors;
-using FocusFlow.Api.Features.Auth.Register;
 using FocusFlow.Api.Features.Auth.Rules;
+using FocusFlow.Api.Infrastructure.Security;
 using FocusFlow.Api.Persistence.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -22,8 +23,13 @@ public static class ServiceRegistration
 
 
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-        
+
+
+
+        services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
         services.AddScoped<IAuthBusinessRules, AuthBusinessRules>();
+
+
 
         services.AddDbContext<FocusFlowDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));

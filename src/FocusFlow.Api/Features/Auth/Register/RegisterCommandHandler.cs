@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FocusFlow.Api.Common.Abstractions.Security;
 using FocusFlow.Api.Common.Exceptions;
 using FocusFlow.Api.Domain.Entities;
 using FocusFlow.Api.Features.Auth.Rules;
@@ -7,8 +8,10 @@ using MediatR;
 
 namespace FocusFlow.Api.Features.Auth.Register;
 
-public sealed class RegisterCommandHandler(FocusFlowDbContext dbContext,
-    IAuthBusinessRules authBusinessRules)
+public sealed class RegisterCommandHandler(
+    FocusFlowDbContext dbContext,
+    IAuthBusinessRules authBusinessRules,
+    IPasswordHasher passwordHasher)
     : IRequestHandler<RegisterCommandRequest, RegisterCommandResponse>
 {
 
@@ -24,7 +27,7 @@ public sealed class RegisterCommandHandler(FocusFlowDbContext dbContext,
         {
             Id = Guid.NewGuid(),
             Email = normalizedEmail,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+            PasswordHash = passwordHasher.Hash(request.Password),
             DisplayName = normalizedDisplayName,
             IsEmailVerified = false,
             IsActive = true
