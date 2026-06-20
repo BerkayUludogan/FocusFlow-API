@@ -1,53 +1,50 @@
 ﻿using FluentValidation;
+using FocusFlow.Api.Common.Exceptions;
 using FocusFlow.Api.Domain.Entities;
+using FocusFlow.Api.Features.Auth.Rules;
 using FocusFlow.Api.Persistence.Context;
-using Microsoft.EntityFrameworkCore; 
 using MediatR;
 
 namespace FocusFlow.Api.Features.Auth.Register;
 
 public sealed class RegisterCommandHandler(FocusFlowDbContext dbContext,
-    IValidator<RegisterCommandRequest> validator)
+    IValidator<RegisterCommandRequest> validator,
+    IAuthBusinessRules authBusinessRules)
     : IRequestHandler<RegisterCommandRequest, RegisterCommandResponse>
 {
+
     public async Task<RegisterCommandResponse> Handle(RegisterCommandRequest request, CancellationToken cancellationToken)
     {
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
         if (!validationResult.IsValid)
-        {
-            var errors = string.Join(" ", validationResult.Errors.Select(error => error.ErrorMessage));
-            throw new ValidationException(errors);
-        }
+            throw new RequestValidationException(
+            validationResult.Errors.Select(error => error.ErrorMessage).ToList());
 
         var normalizedEmail = request.Email.Trim().ToLowerInvariant();
+        var normalizedDisplayName = request.DisplayName.Trim();
 
-        var emailExists = await dbContext.Users
-            .AnyAsync(user => user.Email == normalizedEmail, cancellationToken);
-
-        if (emailExists)
-        {
-            throw new InvalidOperationException("Email is already registered.");
-        }
+        await authBusinessRules.EmailMustBeUniqueAsync(normalizedEmail, cancellationToken);
+        authBusinessRules.DisplayNameMustNotBeReserved(normalizedDisplayName);
 
         var user = new UserEntity
         {
             Id = Guid.NewGuid(),
             Email = normalizedEmail,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-            DisplayName = request.DisplayName.Trim(),
+            DisplayName = normalizedDisplayName,
             IsEmailVerified = false,
             IsActive = true
         };
 
         dbContext.Users.Add(user);
-
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return new RegisterCommandResponse
         {
             Id = user.Id,
             Email = user.Email,
-            DisplayName = user.DisplayName,
+            DisplayName = normalizedDisplayName,
             CreatedAtUtc = user.CreatedAtUtc
         };
     }

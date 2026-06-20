@@ -2,9 +2,25 @@
 
 public abstract class BaseException : Exception
 {
-    protected BaseException(string message) : base(message)
-    {
+    public int StatusCode { get; }
+    public List<string> Errors { get; }
 
+    protected BaseException(string messageKey, int statusCode)
+        : base(ErrorMessageResolver.Get(messageKey))
+    {
+        StatusCode = statusCode;
+        Errors = new List<string>
+            {
+                ErrorMessageResolver.Get(messageKey)
+            };
     }
-    public abstract int StatusCode { get; }
+    protected BaseException(List<string> messageKeys, int statusCode)
+    {
+        StatusCode = statusCode;
+
+        Errors = messageKeys?
+            .Select(ErrorMessageResolver.Get)
+            .ToList()
+            ?? new List<string>();
+    }
 }

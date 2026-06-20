@@ -4,7 +4,9 @@
     {
         public const int Email = 256;
 
-        public const int PasswordHash = 500;
+        public const int PasswordHash = 500; 
+        public const int PasswordMin = 8;
+        public const int Password = 100;
 
         public const int DisplayName = 100;
 
