@@ -1,68 +1,83 @@
-﻿using FocusFlow.Api.Shared.Exceptions;
-using System.Text.Json;
+﻿using System.Text.Json;
+using FocusFlow.Api.Shared.Exceptions;
 
 namespace FocusFlow.Api.Shared.Middleware;
 
 public sealed class ExceptionHandlingMiddleware
 {
+    private static readonly JsonSerializerOptions JsonSerializerOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    };
+
     private readonly RequestDelegate _next;
     private readonly ILogger<ExceptionHandlingMiddleware> _logger;
     private readonly IHostEnvironment _environment;
 
-    public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger, IHostEnvironment environment)
+    public ExceptionHandlingMiddleware(
+        RequestDelegate next,
+        ILogger<ExceptionHandlingMiddleware> logger,
+        IHostEnvironment environment)
     {
         _next = next;
         _logger = logger;
         _environment = environment;
     }
-
     public async Task InvokeAsync(HttpContext context)
     {
         try
         {
             await _next(context);
         }
-        catch (BaseException ex)
+        catch (BaseException exception)
         {
-            _logger.LogError(ex, "Uygulama hatası oluştu");
+            _logger.LogWarning(exception, "Application exception occurred.");
 
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = ex.StatusCode;
-
-            var response = new
-            {
-                success = false,
-                statusCode = ex.StatusCode,
-                errors = ex.Errors
-            };
-            var result = JsonSerializer.Serialize(response);
-
-            await context.Response.WriteAsync(result);
+            await WriteErrorResponseAsync(
+                context,
+                exception.StatusCode,
+                exception.Errors);
         }
-        catch (Exception ex)
+        catch (Exception exception)
         {
-            _logger.LogError(ex, "Beklenmeyen bir hata oluştu");
-
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            _logger.LogError(exception, "Unexpected exception occurred.");
 
             var errors = new List<string>
-                {
-                    _environment.IsDevelopment()
-                        ? ex.Message
-                        : "Beklenmeyen bir hata oluştu"
-                };
-
-            var response = new
             {
-                success = false,
-                statusCode = StatusCodes.Status500InternalServerError,
-                errors
+                _environment.IsDevelopment()
+                    ? exception.Message
+                    : "Beklenmeyen bir hata oluştu."
             };
 
-            var result = JsonSerializer.Serialize(response);
-
-            await context.Response.WriteAsync(result);
+            await WriteErrorResponseAsync(
+                context,
+                StatusCodes.Status500InternalServerError,
+                errors);
         }
+    }
+    private static async Task WriteErrorResponseAsync(
+        HttpContext context,
+        int statusCode,
+        IReadOnlyList<string> errors)
+    {
+        if (context.Response.HasStarted)
+        {
+            return;
+        }
+
+        context.Response.Clear();
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = statusCode;
+
+        var response = new
+        {
+            success = false,
+            statusCode,
+            errors
+        };
+
+        var result = JsonSerializer.Serialize(response, JsonSerializerOptions);
+
+        await context.Response.WriteAsync(result);
     }
 }
