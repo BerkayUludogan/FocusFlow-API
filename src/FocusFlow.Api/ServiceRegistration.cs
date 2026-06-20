@@ -1,8 +1,10 @@
 ﻿using FluentValidation;
 using FocusFlow.Api.Features.Auth.Rules;
 using FocusFlow.Api.Infrastructure.Security;
+using FocusFlow.Api.Infrastructure.Token;
 using FocusFlow.Api.Persistence.Context;
 using FocusFlow.Api.Shared.Abstractions.Security;
+using FocusFlow.Api.Shared.Abstractions.Token;
 using FocusFlow.Api.Shared.Behaviors;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -21,6 +23,13 @@ public static class ServiceRegistration
     {
         services.AddEndpointsApiExplorer();
         services.AddAuthorization();
+
+        var tokenSettings = configuration
+            .GetSection("JWT")
+            .Get<TokenSettings>()
+            ?? throw new InvalidOperationException("JWT settings missing.");
+
+        services.AddSingleton(tokenSettings);
 
         #region Swagger
         services.AddSwaggerGen(gen =>
@@ -81,7 +90,7 @@ public static class ServiceRegistration
             });
 
         #endregion
-
+    
         var assembly = Assembly.GetExecutingAssembly();
 
         services.AddMediatR(cfg =>
@@ -94,6 +103,7 @@ public static class ServiceRegistration
 
         services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
         services.AddScoped<IAuthBusinessRules, AuthBusinessRules>();
+        services.AddScoped<ITokenService, TokenService>();  
 
         services.AddDbContext<FocusFlowDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));

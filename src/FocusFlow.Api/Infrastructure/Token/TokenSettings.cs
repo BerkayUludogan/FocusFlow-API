@@ -1,6 +1,6 @@
 ﻿namespace FocusFlow.Api.Infrastructure.Token;
 
-public sealed class JwtSettings
+public sealed class TokenSettings
 {
     public string Audience { get; set; } = string.Empty;
 
