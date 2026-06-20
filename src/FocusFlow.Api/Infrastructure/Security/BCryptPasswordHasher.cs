@@ -1,4 +1,4 @@
-﻿using FocusFlow.Api.Common.Abstractions.Security;
+﻿using FocusFlow.Api.Shared.Abstractions.Security;
 
 namespace FocusFlow.Api.Infrastructure.Security;
 

@@ -1,5 +1,5 @@
-﻿using FocusFlow.Api.Common.Errors;
-using FocusFlow.Api.Common.Exceptions;
+﻿using FocusFlow.Api.Shared.Errors;
+using FocusFlow.Api.Shared.Exceptions;
 using FocusFlow.Api.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 

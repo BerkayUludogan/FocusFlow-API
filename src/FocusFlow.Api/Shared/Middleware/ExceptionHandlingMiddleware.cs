@@ -1,7 +1,7 @@
-﻿using FocusFlow.Api.Common.Exceptions;
+﻿using FocusFlow.Api.Shared.Exceptions;
 using System.Text.Json;
 
-namespace FocusFlow.Api.Middleware;
+namespace FocusFlow.Api.Shared.Middleware;
 
 public sealed class ExceptionHandlingMiddleware
 {

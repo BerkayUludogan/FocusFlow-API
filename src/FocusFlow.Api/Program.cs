@@ -1,6 +1,6 @@
 using FocusFlow.Api;
+using FocusFlow.Api.Shared.Middleware;
 using FocusFlow.Api.Features.Auth.Register;
-using FocusFlow.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 

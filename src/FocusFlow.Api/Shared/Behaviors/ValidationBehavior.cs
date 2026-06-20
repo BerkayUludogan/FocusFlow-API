@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 
-namespace FocusFlow.Api.Common.Behaviors;
+namespace FocusFlow.Api.Shared.Behaviors;
 
 public class ValidationBehavior<TReq, TRes>(
     IEnumerable<IValidator<TReq>> validators)

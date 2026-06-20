@@ -1,4 +1,4 @@
-﻿namespace FocusFlow.Api.Common.Abstractions.Security;
+﻿namespace FocusFlow.Api.Shared.Abstractions.Security;
 
 public interface IPasswordHasher
 {

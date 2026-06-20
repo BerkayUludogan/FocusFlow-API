@@ -1,4 +1,4 @@
-﻿namespace FocusFlow.Api.Common.Exceptions;
+﻿namespace FocusFlow.Api.Shared.Exceptions;
 public sealed class BusinessRuleException : BaseException
 {
     public BusinessRuleException(string messageKey)

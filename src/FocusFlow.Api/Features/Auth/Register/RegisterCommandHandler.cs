@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using FocusFlow.Api.Common.Abstractions.Security;
-using FocusFlow.Api.Common.Exceptions;
+﻿using FocusFlow.Api.Shared.Abstractions.Security;
 using FocusFlow.Api.Domain.Entities;
 using FocusFlow.Api.Features.Auth.Rules;
 using FocusFlow.Api.Persistence.Context;

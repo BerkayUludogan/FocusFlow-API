@@ -1,4 +1,4 @@
-﻿namespace FocusFlow.Api.Common.Errors;
+﻿namespace FocusFlow.Api.Shared.Errors;
 
 public static class AuthErrors
 {

@@ -1,6 +1,6 @@
-﻿using FocusFlow.Api.Common.Errors;
+﻿using FocusFlow.Api.Shared.Errors;
 
-namespace FocusFlow.Api.Common.Exceptions;
+namespace FocusFlow.Api.Shared.Exceptions;
 
 public class ErrorMessageResolver
 {
