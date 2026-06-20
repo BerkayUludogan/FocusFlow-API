@@ -1,4 +1,4 @@
-using FocusFlow.Api.Persistence;
+using FocusFlow.Api.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
