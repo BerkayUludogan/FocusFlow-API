@@ -8,7 +8,10 @@ public static class ErrorMessageResolver
         new Dictionary<string, string>
         {
             [AuthErrors.EmailAlreadyRegistered] = "Bu email zaten kayıtlı.",
-            [AuthErrors.DisplayNameReserved] = "Bu kullanıcı adı kullanılamaz."
+            [AuthErrors.DisplayNameReserved] = "Bu kullanıcı adı kullanılamaz.",
+            [AuthErrors.UserNotFound] = "Kullanıcı bulunamadı.",
+            [AuthErrors.UserNotActive] = "Kullanıcı hesabı aktif değil.",
+            [AuthErrors.InvalidPassword] = "Email veya şifre hatalı."
         };
 
     public static string Get(string key)
