@@ -25,6 +25,6 @@ public static class ServiceRegistration
         services.AddSwaggerServices();
         services.AddJwtAuthentication(configuration);
         services.AddMediatRServices();
-        services.AddPersistenceServices(configuration);
+        services.AddPersistenceServices(configuration); 
     }
 }

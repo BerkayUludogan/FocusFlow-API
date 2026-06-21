@@ -53,5 +53,13 @@ namespace FocusFlow.Api.Features.Auth.Rules
             if (!user.IsActive)
                 throw new BusinessRuleException(AuthErrors.UserNotActive);
         }
+
+        public UserEntity UserMustExist(UserEntity? user)
+        {
+            if (user is null)
+                throw new BusinessRuleException(AuthErrors.UserNotFound);
+
+            return user;
+        }
     }
 }
