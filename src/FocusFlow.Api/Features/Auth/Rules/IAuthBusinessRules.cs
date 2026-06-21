@@ -13,4 +13,6 @@ public interface IAuthBusinessRules
     UserEntity RefreshTokenMustExist(UserEntity? user);
     void RefreshTokenMustNotBeExpired(UserEntity user);
 
+    UserEntity UserMustExist(UserEntity? user);
+
 }

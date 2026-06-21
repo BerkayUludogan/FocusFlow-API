@@ -13,7 +13,8 @@ public static class ErrorMessageResolver
             [AuthErrors.UserNotActive] = "Kullanıcı hesabı aktif değil.",
             [AuthErrors.InvalidCredentials] = "Email veya şifre hatalı.",
             [AuthErrors.RefreshTokenNotFound] = "Refresh token geçersiz.",
-            [AuthErrors.RefreshTokenExpired] = "Refresh token geçersiz."
+            [AuthErrors.RefreshTokenExpired] = "Refresh token geçersiz.",
+            [AuthErrors.InvalidToken] = "Geçersiz token."
         };
 
     public static string Get(string key)
