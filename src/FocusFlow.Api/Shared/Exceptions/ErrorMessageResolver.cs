@@ -11,7 +11,7 @@ public static class ErrorMessageResolver
             [AuthErrors.DisplayNameReserved] = "Bu kullanıcı adı kullanılamaz.",
             [AuthErrors.UserNotFound] = "Kullanıcı bulunamadı.",
             [AuthErrors.UserNotActive] = "Kullanıcı hesabı aktif değil.",
-            [AuthErrors.InvalidPassword] = "Email veya şifre hatalı."
+            [AuthErrors.InvalidCredentials] = "Email veya şifre hatalı."
         };
 
     public static string Get(string key)
