@@ -1,20 +1,20 @@
 ﻿using FocusFlow.Api.Shared.EndPoints;
 using MediatR;
 
-namespace FocusFlow.Api.Features.Auth.Register;
+namespace FocusFlow.Api.Features.Auth.Login;
 
-public sealed class RegisterEndpoint : IEndpoints
+public sealed class LoginEndpoint : IEndpoints
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("/api/auth/register", async (
-            RegisterCommandRequest request,
+        app.MapPost("/api/auth/login", async (
+            LoginCommandRequest request,
             ISender sender,
             CancellationToken cancellationToken) =>
         {
             var response = await sender.Send(request, cancellationToken);
 
-            return Results.Created($"/api/users/{response.Id}", response);
+            return Results.Ok(response);
         });
     }
 }

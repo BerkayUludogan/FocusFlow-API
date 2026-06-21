@@ -2,6 +2,7 @@
 using FocusFlow.Api.Shared.Exceptions;
 using FocusFlow.Api.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using FocusFlow.Api.Domain.Entities;
 
 namespace FocusFlow.Api.Features.Auth.Rules
 {
@@ -26,6 +27,18 @@ namespace FocusFlow.Api.Features.Auth.Rules
 
             if (emailExist)
                 throw new BusinessRuleException(AuthErrors.EmailAlreadyRegistered);
+        }
+
+        public void PasswordMustBeValid(bool isPasswordValid)
+        {
+            if (!isPasswordValid)
+                throw new BusinessRuleException(AuthErrors.InvalidCredentials);
+        }
+
+        public void UserMustBeActive(UserEntity user)
+        {
+            if (!user.IsActive)
+                throw new BusinessRuleException(AuthErrors.UserNotActive);
         }
     }
 }

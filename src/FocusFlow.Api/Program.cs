@@ -1,6 +1,6 @@
 using FocusFlow.Api;
+using FocusFlow.Api.Extensions; 
 using FocusFlow.Api.Shared.Middleware;
-using FocusFlow.Api.Features.Auth.Register;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +24,6 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRegisterEndpoint();
+app.MapEndpoints();
 
 app.Run();  
