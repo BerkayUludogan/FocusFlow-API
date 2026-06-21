@@ -3,7 +3,7 @@ using MediatR;
 
 namespace FocusFlow.Api.Features.Auth.Register;
 
-public sealed class RegisterEndpoint : IEndpoints
+public sealed class RegisterEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

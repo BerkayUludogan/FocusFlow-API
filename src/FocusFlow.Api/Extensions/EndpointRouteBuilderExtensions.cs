@@ -10,12 +10,12 @@ public static class EndpointRouteBuilderExtensions
 
         var endpointTypes = assembly.GetTypes()
             .Where(type =>
-                typeof(IEndpoints).IsAssignableFrom(type) &&
+                typeof(IEndpoint).IsAssignableFrom(type) &&
                 type is { IsAbstract: false, IsInterface: false });
 
         foreach (var endpointType in endpointTypes)
         {
-            var endpoint = Activator.CreateInstance(endpointType) as IEndpoints;
+            var endpoint = Activator.CreateInstance(endpointType) as IEndpoint;
 
             endpoint?.MapEndpoint(app);
         }

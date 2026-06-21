@@ -9,4 +9,8 @@ public interface IAuthBusinessRules
 
     void UserMustBeActive(UserEntity user);
     void PasswordMustBeValid(bool isPasswordValid);
+
+    UserEntity RefreshTokenMustExist(UserEntity? user);
+    void RefreshTokenMustNotBeExpired(UserEntity user);
+
 }
