@@ -8,6 +8,7 @@ namespace FocusFlow.Api.Persistence.Context;
 public sealed class FocusFlowDbContext(DbContextOptions<FocusFlowDbContext> options) : DbContext(options)
 {
     public DbSet<UserEntity> Users => Set<UserEntity>();
+    public DbSet<TaskItemEntity> TaskItems => Set<TaskItemEntity>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -27,7 +28,7 @@ public sealed class FocusFlowDbContext(DbContextOptions<FocusFlowDbContext> opti
                 EntityState.Modified => data.Entity.ModifiedAtUtc = DateTime.UtcNow,
                 _ => DateTime.UtcNow
             };
-        } 
+        }
         return base.SaveChangesAsync(cancellationToken);
     }
 }
