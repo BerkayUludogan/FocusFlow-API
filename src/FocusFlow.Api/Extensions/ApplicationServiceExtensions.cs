@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using FluentValidation;
 using FocusFlow.Api.Features.Auth.Rules;
+using FocusFlow.Api.Features.TaskItems.Rules;
 using FocusFlow.Api.Infrastructure.Security;
 using FocusFlow.Api.Shared.Abstractions.Security;
 using FocusFlow.Api.Shared.Behaviors;
@@ -23,5 +24,6 @@ public static class ApplicationServiceExtensions
 
         services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
         services.AddScoped<IAuthBusinessRules, AuthBusinessRules>();
+        services.AddScoped<ITaskItemBusinessRules, TaskItemBusinessRules>();
     }
 }

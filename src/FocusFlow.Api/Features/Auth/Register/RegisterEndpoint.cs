@@ -15,6 +15,6 @@ public sealed class RegisterEndpoint : IEndpoint
             var response = await sender.Send(request, cancellationToken);
 
             return Results.Created($"/api/users/{response.Id}", response);
-        });
+        }).WithTags("Auth");
     }
 }

@@ -20,6 +20,6 @@ public class MeEndpoint : IEndpoint
 
             return Results.Ok(response);
 
-        }).RequireAuthorization();
+        }).WithTags("Auth").RequireAuthorization();
     }
 }

@@ -22,6 +22,6 @@ public sealed class LogoutEndpoint : IEndpoint
 
             return Results.NoContent();
 
-        }).RequireAuthorization();
+        }).WithTags("Auth").RequireAuthorization();
     }
 }

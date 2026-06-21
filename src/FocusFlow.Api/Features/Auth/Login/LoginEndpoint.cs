@@ -15,6 +15,6 @@ public sealed class LoginEndpoint : IEndpoint
             var response = await sender.Send(request, cancellationToken);
 
             return Results.Ok(response);
-        });
+        }).WithTags("Auth");
     }
 }
