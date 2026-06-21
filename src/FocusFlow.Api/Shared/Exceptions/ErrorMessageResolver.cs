@@ -14,7 +14,9 @@ public static class ErrorMessageResolver
             [AuthErrors.InvalidCredentials] = "Email veya şifre hatalı.",
             [AuthErrors.RefreshTokenNotFound] = "Refresh token geçersiz.",
             [AuthErrors.RefreshTokenExpired] = "Refresh token geçersiz.",
-            [AuthErrors.InvalidToken] = "Geçersiz token."
+            [AuthErrors.InvalidToken] = "Geçersiz token.",
+
+            [TaskItemErrors.ClientIdAlreadyExists] = "Bu görev zaten senkronize edilmiş."
         };
 
     public static string Get(string key)
