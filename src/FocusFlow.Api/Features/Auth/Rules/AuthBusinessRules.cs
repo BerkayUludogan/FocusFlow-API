@@ -11,7 +11,7 @@ namespace FocusFlow.Api.Features.Auth.Rules
         private static readonly HashSet<string> ReservedDisplayNames = new(StringComparer.OrdinalIgnoreCase)
          {
             "admin","administrator","root","system","support","focusflow"
-         }; 
+         };
         public void DisplayNameMustNotBeReserved(string displayName)
         {
             var normalizedDisplayName = displayName.Trim();
@@ -33,6 +33,19 @@ namespace FocusFlow.Api.Features.Auth.Rules
         {
             if (!isPasswordValid)
                 throw new BusinessRuleException(AuthErrors.InvalidCredentials);
+        }
+
+        public UserEntity RefreshTokenMustExist(UserEntity? user)
+        {
+            if (user is null)
+                throw new BusinessRuleException(AuthErrors.RefreshTokenNotFound);
+            return user;
+        }
+
+        public void RefreshTokenMustNotBeExpired(UserEntity user)
+        {
+            if (user.RefreshTokenExpiresAtUtc is null || user.RefreshTokenExpiresAtUtc <= DateTime.UtcNow)
+                throw new BusinessRuleException(AuthErrors.RefreshTokenExpired);
         }
 
         public void UserMustBeActive(UserEntity user)
