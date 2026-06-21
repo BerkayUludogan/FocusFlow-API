@@ -15,7 +15,7 @@ public sealed class RefreshTokenEndpoint : IEndpoint
         {
             var response = await sender.Send(request, cancellationToken);
             return Results.Ok(response);
-        });
+        }).WithTags("Auth");
     }
 }
 
