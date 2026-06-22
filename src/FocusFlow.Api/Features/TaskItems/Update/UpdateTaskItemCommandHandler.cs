@@ -25,8 +25,6 @@ public sealed class UpdateTaskItemCommandHandler(
         taskItem.EstimatedPomodoroCount = request.EstimatedPomodoroCount;
         taskItem.ModifiedAtUtc = DateTime.UtcNow;
 
-        dbContext.TaskItems.Update(taskItem);
-
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return new UpdateTaskItemCommandResponse

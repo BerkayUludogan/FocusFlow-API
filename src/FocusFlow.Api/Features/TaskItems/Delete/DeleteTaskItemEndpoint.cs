@@ -6,7 +6,7 @@ namespace FocusFlow.Api.Features.TaskItems.Delete
 {
     public class DeleteTaskItemEndpoint : IEndpoint
     {
-        public async void MapEndpoint(IEndpointRouteBuilder app)
+        public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapDelete("/api/tasks/{id:guid}", async (
                 Guid id,
