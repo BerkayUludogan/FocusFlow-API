@@ -23,7 +23,7 @@ public static class ErrorMessageResolver
             [PomodoroSessionErrors.RunningSessionAlreadyExists] = "Zaten devam eden bir pomodoro oturumu var.",
             [PomodoroSessionErrors.TaskItemNotFound] = "Göreve bağlı pomodoro oturumu başlatılamadı.",
             [PomodoroSessionErrors.PomodoroSessionNotFound] = "Pomodoro oturumu bulunamadı.",
-            [PomodoroSessionErrors.PomodoroSessionAlreadyCompleted] = "Pomodoro oturumu zaten tamamlanmış."
+            [PomodoroSessionErrors.PomodoroSessionAlreadyCompleted] = "Pomodoro oturumu artık aktif değil."
 
         };
 
