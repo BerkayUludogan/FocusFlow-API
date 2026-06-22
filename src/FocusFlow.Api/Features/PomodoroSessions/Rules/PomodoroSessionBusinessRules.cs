@@ -1,4 +1,5 @@
-﻿using FocusFlow.Api.Domain.Enums;
+﻿using FocusFlow.Api.Domain.Entities;
+using FocusFlow.Api.Domain.Enums;
 using FocusFlow.Api.Persistence.Context;
 using FocusFlow.Api.Shared.Errors;
 using FocusFlow.Api.Shared.Exceptions;
@@ -38,5 +39,20 @@ public sealed class PomodoroSessionBusinessRules(FocusFlowDbContext dbContext) :
             throw new BusinessRuleException(PomodoroSessionErrors.TaskItemNotFound);
     }
 
+    public async Task<PomodoroSessionEntity> PomodoroSessionMustExistAsync(Guid userId, Guid pomodoroSessionId, CancellationToken cancellationToken)
+    {
+        var pomodoroSession = await dbContext.PomodoroSessions
+            .FirstOrDefaultAsync(x => x.UserId == userId && x.Id == pomodoroSessionId, cancellationToken);
 
+        if (pomodoroSession is null)
+            throw new BusinessRuleException(PomodoroSessionErrors.PomodoroSessionNotFound);
+
+        return pomodoroSession;
+    }
+
+    public void PomodoroSessionMustBeRunning(PomodoroSessionEntity pomodoroSession)
+    {
+        if (pomodoroSession.Status != PomodoroSessionStatus.Running)
+            throw new BusinessRuleException(PomodoroSessionErrors.PomodoroSessionAlreadyCompleted);
+    }
 }

@@ -1,4 +1,6 @@
-﻿namespace FocusFlow.Api.Features.PomodoroSessions.Rules;
+﻿using FocusFlow.Api.Domain.Entities;
+
+namespace FocusFlow.Api.Features.PomodoroSessions.Rules;
 
 public interface IPomodoroSessionBusinessRules
 {
@@ -15,4 +17,11 @@ public interface IPomodoroSessionBusinessRules
         Guid userId,
         Guid? taskItemId,
         CancellationToken cancellationToken);
+
+    Task<PomodoroSessionEntity> PomodoroSessionMustExistAsync(
+    Guid userId,
+    Guid pomodoroSessionId,
+    CancellationToken cancellationToken);
+
+    void PomodoroSessionMustBeRunning(PomodoroSessionEntity pomodoroSession);
 }
