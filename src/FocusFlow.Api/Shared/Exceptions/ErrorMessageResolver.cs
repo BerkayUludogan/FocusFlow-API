@@ -17,7 +17,12 @@ public static class ErrorMessageResolver
             [AuthErrors.InvalidToken] = "Geçersiz token.",
 
             [TaskItemErrors.ClientIdAlreadyExists] = "Bu görev zaten senkronize edilmiş.",
-            [TaskItemErrors.TaskItemNotFound] = "Görev bulunamadı."
+            [TaskItemErrors.TaskItemNotFound] = "Görev bulunamadı.",
+
+            [PomodoroSessionErrors.ClientIdAlreadyExists] = "Bu pomodoro oturumu zaten senkronize edilmiş.",
+            [PomodoroSessionErrors.RunningSessionAlreadyExists] = "Zaten devam eden bir pomodoro oturumu var.",
+            [PomodoroSessionErrors.TaskItemNotFound] = "Göreve bağlı pomodoro oturumu başlatılamadı."
+
         };
 
     public static string Get(string key)
