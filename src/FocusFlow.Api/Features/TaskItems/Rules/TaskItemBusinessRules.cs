@@ -23,7 +23,6 @@ public sealed class TaskItemBusinessRules(FocusFlowDbContext dbContext) : ITaskI
     public async Task<TaskItemEntity> TaskItemMustExistAsync(Guid userId, Guid taskItemId, CancellationToken cancellationToken)
     {
         var taskItem = await dbContext.TaskItems
-            .AsNoTracking()
             .FirstOrDefaultAsync(
              task => task.UserId == userId &&
              task.Id == taskItemId, cancellationToken);
