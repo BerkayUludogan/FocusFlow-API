@@ -6,7 +6,7 @@ namespace FocusFlow.Api.Features.TaskItems.GetList;
 
 public sealed class GetTaskItemsEndpoint : IEndpoint
 {
-    public async void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("/api/tasks", async (
             HttpContext httpContext,
