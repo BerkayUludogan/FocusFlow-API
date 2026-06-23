@@ -10,6 +10,7 @@ public sealed class FocusFlowDbContext(DbContextOptions<FocusFlowDbContext> opti
     public DbSet<UserEntity> Users => Set<UserEntity>();
     public DbSet<TaskItemEntity> TaskItems => Set<TaskItemEntity>();
     public DbSet<PomodoroSessionEntity> PomodoroSessions => Set<PomodoroSessionEntity>();
+    public DbSet<UserEmailVerificationTokenEntity> UserEmailVerificationTokens => Set<UserEmailVerificationTokenEntity>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
