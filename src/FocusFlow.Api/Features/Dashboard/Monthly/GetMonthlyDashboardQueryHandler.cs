@@ -4,17 +4,15 @@ using FocusFlow.Api.Persistence.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace FocusFlow.Api.Features.Dashboard.Weekly;
+namespace FocusFlow.Api.Features.Dashboard.Monthly;
 
-public sealed class GetWeeklyDashboardQueryHandler(FocusFlowDbContext dbContext)
-    : IRequestHandler<GetWeeklyDashboardQueryRequest, GetWeeklyDashboardQueryResponse>
+public sealed class GetMonthlyDashboardQueryHandler(FocusFlowDbContext dbContext)
+    : IRequestHandler<GetMonthlyDashboardQueryRequest, GetMonthlyDashboardQueryResponse>
 {
-    public async Task<GetWeeklyDashboardQueryResponse> Handle(
-        GetWeeklyDashboardQueryRequest request,
-        CancellationToken cancellationToken)
+    public async Task<GetMonthlyDashboardQueryResponse> Handle(GetMonthlyDashboardQueryRequest request, CancellationToken cancellationToken)
     {
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        var fromDate = today.AddDays(-6);
+        var fromDate = today.AddDays(-29);
 
         var startUtc = fromDate.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc);
         var endUtc = today.AddDays(1).ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc);
@@ -36,10 +34,10 @@ public sealed class GetWeeklyDashboardQueryHandler(FocusFlowDbContext dbContext)
 
         var days = DashboardPeriodBuilder.BuildDays(
             fromDate,
-            7,
+            30,
             sessions);
 
-        return new GetWeeklyDashboardQueryResponse
+        return new GetMonthlyDashboardQueryResponse
         {
             FromDate = fromDate,
             ToDate = today,
@@ -47,5 +45,6 @@ public sealed class GetWeeklyDashboardQueryHandler(FocusFlowDbContext dbContext)
             TotalFocusMinutes = days.Sum(day => day.CompletedFocusMinutes),
             Days = days
         };
+
     }
 }
