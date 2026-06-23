@@ -16,6 +16,11 @@ public static class ErrorMessageResolver
             [AuthErrors.RefreshTokenExpired] = "Refresh token geçersiz.",
             [AuthErrors.InvalidToken] = "Geçersiz token.",
             [AuthErrors.CurrentPasswordInvalid] = "Mevcut şifre hatalı.",
+            [AuthErrors.EmailVerificationCodeInvalid] = "Doğrulama kodu geçersiz.",
+            [AuthErrors.EmailVerificationCodeExpired] = "Doğrulama kodunun süresi dolmuş.",
+            [AuthErrors.EmailNotVerified] = "Email adresinizi doğrulamanız gerekiyor.",
+            [AuthErrors.EmailVerificationCodeRecentlySent] = "Yeni doğrulama kodu istemeden önce biraz beklemelisiniz.",
+            [AuthErrors.EmailVerificationCodeRequestLimitExceeded] = "Çok fazla doğrulama kodu istediniz. Lütfen daha sonra tekrar deneyin.",
 
             [TaskItemErrors.ClientIdAlreadyExists] = "Bu görev zaten senkronize edilmiş.",
             [TaskItemErrors.TaskItemNotFound] = "Görev bulunamadı.",

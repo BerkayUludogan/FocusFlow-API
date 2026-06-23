@@ -21,7 +21,8 @@ public static class EmailServiceExtensions
         else
         {
             services.AddScoped<IEmailSender, SmtpEmailSender>();
-        } 
+        }
+
         services.AddScoped<IEmailVerificationTokenService, EmailVerificationTokenService>();
         services.AddScoped<IEmailVerificationService, EmailVerificationService>();
     }

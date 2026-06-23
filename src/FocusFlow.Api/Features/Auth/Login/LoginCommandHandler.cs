@@ -32,6 +32,7 @@ public sealed class LoginCommandHandler(
         var isPasswordValid = passwordHasher.Verify(request.Password, user.PasswordHash);
 
         loginBusinessRules.PasswordMustBeValid(isPasswordValid);
+        loginBusinessRules.UserEmailMustBeVerified(user);
 
         var token = tokenService.CreateToken(user);
 
@@ -42,7 +43,5 @@ public sealed class LoginCommandHandler(
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return token;
-
-
     }
 }
