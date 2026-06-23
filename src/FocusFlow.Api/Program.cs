@@ -7,9 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
+
 #region Middlewares
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 #endregion
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseHsts();
