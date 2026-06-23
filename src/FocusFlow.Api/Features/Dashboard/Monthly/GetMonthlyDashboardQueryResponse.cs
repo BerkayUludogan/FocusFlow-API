@@ -1,8 +1,8 @@
 ﻿using FocusFlow.Api.Features.Dashboard.Shared;
 
-namespace FocusFlow.Api.Features.Dashboard.Weekly;
+namespace FocusFlow.Api.Features.Dashboard.Monthly;
 
-public sealed class GetWeeklyDashboardQueryResponse
+public sealed class GetMonthlyDashboardQueryResponse
 {
     public DateOnly FromDate { get; set; }
 
