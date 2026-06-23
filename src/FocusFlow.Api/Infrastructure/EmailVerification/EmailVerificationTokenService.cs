@@ -1,36 +1,37 @@
-﻿using FocusFlow.Api.Shared.Abstractions.Email;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
+using FocusFlow.Api.Shared.Abstractions.Email;
 
 namespace FocusFlow.Api.Infrastructure.EmailVerification;
 
 public sealed class EmailVerificationTokenService : IEmailVerificationTokenService
 {
-    private const int TokenSizeInBytes = 32;
-    private const int ExpirationHours = 24;
-    public EmailVerificationTokenDto CreateToken()
+    private const int ExpirationMinutes = 10;
+
+    public EmailVerificationTokenDto CreateCode()
     {
-        var rawToken = CreateRawToken();
+        var rawCode = CreateRawCode();
 
         return new EmailVerificationTokenDto
         {
-            RawToken = rawToken,
-            TokenHash = HashToken(rawToken),
-            ExpiresAtUtc = DateTime.UtcNow.AddHours(ExpirationHours)
+            RawCode = rawCode,
+            CodeHash = HashCode(rawCode),
+            ExpiresAtUtc = DateTime.UtcNow.AddMinutes(ExpirationMinutes)
         };
     }
-    public string HashToken(string token)
+
+    public string HashCode(string code)
     {
-        var tokenBytes = Encoding.UTF8.GetBytes(token);
-        var hashBytes = SHA256.HashData(tokenBytes);
+        var codeBytes = Encoding.UTF8.GetBytes(code);
+        var hashBytes = SHA256.HashData(codeBytes);
 
         return Convert.ToBase64String(hashBytes);
     }
 
-    private static string CreateRawToken()
+    private static string CreateRawCode()
     {
-        var bytes = RandomNumberGenerator.GetBytes(TokenSizeInBytes);
+        var code = RandomNumberGenerator.GetInt32(100000, 1000000);
 
-        return Convert.ToBase64String(bytes);
+        return code.ToString();
     }
 }
