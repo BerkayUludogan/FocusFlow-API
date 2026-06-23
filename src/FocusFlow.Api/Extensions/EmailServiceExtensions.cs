@@ -1,4 +1,5 @@
 ﻿using FocusFlow.Api.Infrastructure.Email;
+using FocusFlow.Api.Infrastructure.EmailVerification;
 using FocusFlow.Api.Shared.Abstractions.Email;
 
 namespace FocusFlow.Api.Extensions;
@@ -11,5 +12,6 @@ public static class EmailServiceExtensions
             configuration.GetSection("Email"));
 
         services.AddScoped<IEmailSender, SmtpEmailSender>();
+        services.AddScoped<IEmailVerificationTokenService, EmailVerificationTokenService>();
     }
 }
