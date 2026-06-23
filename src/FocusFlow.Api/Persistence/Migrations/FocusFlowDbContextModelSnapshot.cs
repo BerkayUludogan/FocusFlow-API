@@ -137,6 +137,11 @@ namespace FocusFlow.Api.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("CodeHash")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
@@ -151,11 +156,6 @@ namespace FocusFlow.Api.Persistence.Migrations
                     b.Property<DateTime?>("ModifiedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("TokenHash")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
                     b.Property<DateTime?>("UsedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
@@ -164,12 +164,12 @@ namespace FocusFlow.Api.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TokenHash")
+                    b.HasIndex("CodeHash")
                         .IsUnique();
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("user_email_verification_tokens", (string)null);
+                    b.ToTable("user_email_verification_codes", (string)null);
                 });
 
             modelBuilder.Entity("FocusFlow.Api.Domain.Entities.UserEntity", b =>

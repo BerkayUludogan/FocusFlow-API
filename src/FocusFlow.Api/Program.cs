@@ -4,7 +4,9 @@ using FocusFlow.Api.Shared.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddApplicationServices(
+    builder.Configuration,
+    builder.Environment);
 
 var app = builder.Build();
 

@@ -11,12 +11,12 @@ public sealed class UserEmailVerificationTokenEntityConfiguration : BaseEntityCo
     {
         base.Configure(builder);
 
-        builder.ToTable("user_email_verification_tokens");
+        builder.ToTable("user_email_verification_codes");
 
         builder.Property(token => token.UserId)
             .IsRequired();
 
-        builder.Property(token => token.TokenHash)
+        builder.Property(token => token.CodeHash)
             .IsRequired()
             .HasMaxLength(500);
 
@@ -33,7 +33,7 @@ public sealed class UserEmailVerificationTokenEntityConfiguration : BaseEntityCo
 
         builder.HasIndex(token => token.UserId);
 
-        builder.HasIndex(token => token.TokenHash)
+        builder.HasIndex(token => token.CodeHash)
             .IsUnique();
 
         builder.HasQueryFilter(token => !token.IsDeleted);

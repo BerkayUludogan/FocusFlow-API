@@ -2,7 +2,6 @@
 
 public interface IEmailVerificationTokenService
 {
-    EmailVerificationTokenDto CreateToken();
-
-    string HashToken(string token);
+    EmailVerificationTokenDto CreateCode();
+    string HashCode(string code);
 }

@@ -1,7 +1,8 @@
-﻿using FocusFlow.Api.Shared.Abstractions.Security;
-using FocusFlow.Api.Domain.Entities;
+﻿using FocusFlow.Api.Domain.Entities;
 using FocusFlow.Api.Features.Auth.Rules;
 using FocusFlow.Api.Persistence.Context;
+using FocusFlow.Api.Shared.Abstractions.Email;
+using FocusFlow.Api.Shared.Abstractions.Security;
 using MediatR;
 
 namespace FocusFlow.Api.Features.Auth.Register;
@@ -9,11 +10,13 @@ namespace FocusFlow.Api.Features.Auth.Register;
 public sealed class RegisterCommandHandler(
     FocusFlowDbContext dbContext,
     IAuthBusinessRules authBusinessRules,
-    IPasswordHasher passwordHasher)
+    IPasswordHasher passwordHasher,
+    IEmailVerificationService emailVerificationService)
     : IRequestHandler<RegisterCommandRequest, RegisterCommandResponse>
 {
-
-    public async Task<RegisterCommandResponse> Handle(RegisterCommandRequest request, CancellationToken cancellationToken)
+    public async Task<RegisterCommandResponse> Handle(
+        RegisterCommandRequest request,
+        CancellationToken cancellationToken)
     {
         var normalizedEmail = request.Email.Trim().ToLowerInvariant();
         var normalizedDisplayName = request.DisplayName.Trim();
@@ -32,7 +35,9 @@ public sealed class RegisterCommandHandler(
         };
 
         dbContext.Users.Add(user);
+
         await dbContext.SaveChangesAsync(cancellationToken);
+        await emailVerificationService.SendVerificationCodeAsync(user, cancellationToken);
 
         return new RegisterCommandResponse
         {
