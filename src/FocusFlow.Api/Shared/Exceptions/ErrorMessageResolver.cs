@@ -15,6 +15,7 @@ public static class ErrorMessageResolver
             [AuthErrors.RefreshTokenNotFound] = "Refresh token geçersiz.",
             [AuthErrors.RefreshTokenExpired] = "Refresh token geçersiz.",
             [AuthErrors.InvalidToken] = "Geçersiz token.",
+            [AuthErrors.CurrentPasswordInvalid] = "Mevcut şifre hatalı.",
 
             [TaskItemErrors.ClientIdAlreadyExists] = "Bu görev zaten senkronize edilmiş.",
             [TaskItemErrors.TaskItemNotFound] = "Görev bulunamadı.",

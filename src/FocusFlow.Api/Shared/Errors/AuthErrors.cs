@@ -10,4 +10,5 @@ public static class AuthErrors
     public const string RefreshTokenNotFound = "Auth.RefreshTokenNotFound";
     public const string RefreshTokenExpired = "Auth.RefreshTokenExpired";
     public const string InvalidToken = "Auth.InvalidToken";
+    public const string CurrentPasswordInvalid = "Auth.CurrentPasswordInvalid";
 }
