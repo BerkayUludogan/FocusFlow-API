@@ -48,6 +48,12 @@ namespace FocusFlow.Api.Features.Auth.Rules
                 throw new BusinessRuleException(AuthErrors.RefreshTokenExpired);
         }
 
+        public void UserEmailMustBeVerified(UserEntity user)
+        {
+            if (!user.IsEmailVerified)
+                throw new BusinessRuleException(AuthErrors.EmailNotVerified);
+        }
+
         public void UserMustBeActive(UserEntity user)
         {
             if (!user.IsActive)

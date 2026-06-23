@@ -11,4 +11,10 @@ public static class AuthErrors
     public const string RefreshTokenExpired = "Auth.RefreshTokenExpired";
     public const string InvalidToken = "Auth.InvalidToken";
     public const string CurrentPasswordInvalid = "Auth.CurrentPasswordInvalid";
+    public const string EmailVerificationCodeInvalid = "Auth.EmailVerificationCodeInvalid";
+    public const string EmailVerificationCodeExpired = "Auth.EmailVerificationCodeExpired";
+    public const string EmailNotVerified = "Auth.EmailNotVerified";
+    public const string EmailVerificationCodeRecentlySent = "Auth.EmailVerificationCodeRecentlySent";
+    public const string EmailVerificationCodeRequestLimitExceeded = "Auth.EmailVerificationCodeRequestLimitExceeded";
+
 }

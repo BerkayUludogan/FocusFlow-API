@@ -5,6 +5,8 @@ namespace FocusFlow.Api.Features.Auth.Rules;
 public interface IAuthBusinessRules
 {
     Task EmailMustBeUniqueAsync(string email, CancellationToken cancellationToken);
+    void UserEmailMustBeVerified(UserEntity user);
+
     void DisplayNameMustNotBeReserved(string displayName);
 
     void UserMustBeActive(UserEntity user);
