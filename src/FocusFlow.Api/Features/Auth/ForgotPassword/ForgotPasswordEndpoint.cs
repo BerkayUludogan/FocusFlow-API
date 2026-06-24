@@ -1,4 +1,5 @@
-﻿using FocusFlow.Api.Shared.EndPoints;
+﻿using FocusFlow.Api.Extensions;
+using FocusFlow.Api.Shared.EndPoints;
 using MediatR;
 
 namespace FocusFlow.Api.Features.Auth.ForgotPassword;
@@ -16,6 +17,6 @@ public sealed class ForgotPasswordEndpoint : IEndpoint
 
             return Results.Ok(response);
         })
-        .WithTags("Auth");
+        .WithTags("Auth").RequireRateLimiting(RateLimitingServiceExtensions.AuthPolicy);
     }
 }

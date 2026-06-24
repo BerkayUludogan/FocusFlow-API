@@ -14,5 +14,6 @@ public static class ServiceRegistration
         services.AddMediatRServices();
         services.AddPersistenceServices(configuration);
         services.AddEmailServices(configuration, environment);
+        services.AddRateLimitingServices();
     }
 }

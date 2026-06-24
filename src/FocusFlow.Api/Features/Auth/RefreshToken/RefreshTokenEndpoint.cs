@@ -1,4 +1,5 @@
-﻿using FocusFlow.Api.Shared.EndPoints;
+﻿using FocusFlow.Api.Extensions;
+using FocusFlow.Api.Shared.EndPoints;
 using MediatR;
 
 namespace FocusFlow.Api.Features.Auth.RefreshToken;
@@ -15,7 +16,7 @@ public sealed class RefreshTokenEndpoint : IEndpoint
         {
             var response = await sender.Send(request, cancellationToken);
             return Results.Ok(response);
-        }).WithTags("Auth");
+        }).WithTags("Auth").RequireRateLimiting(RateLimitingServiceExtensions.AuthPolicy);
     }
 }
 
