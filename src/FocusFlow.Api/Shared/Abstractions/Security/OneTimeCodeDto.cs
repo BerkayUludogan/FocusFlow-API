@@ -1,6 +1,6 @@
-﻿namespace FocusFlow.Api.Shared.Abstractions.Email;
+﻿namespace FocusFlow.Api.Shared.Abstractions.Security;
 
-public sealed class EmailVerificationTokenDto
+public sealed class OneTimeCodeDto
 {
     public string RawCode { get; set; } = string.Empty;
 

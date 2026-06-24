@@ -1,6 +1,6 @@
 ﻿using FocusFlow.Api.Features.Auth.Rules;
-using FocusFlow.Api.Persistence.Context;
-using FocusFlow.Api.Shared.Abstractions.Email;
+using FocusFlow.Api.Persistence.Context; 
+using FocusFlow.Api.Shared.Abstractions.Security;
 using FocusFlow.Api.Shared.Errors;
 using FocusFlow.Api.Shared.Exceptions;
 using MediatR;
@@ -11,7 +11,7 @@ namespace FocusFlow.Api.Features.Auth.VerifyEmail;
 public sealed class VerifyEmailCommandHandler(
     FocusFlowDbContext context,
     IAuthBusinessRules authBusinessRules,
-    IEmailVerificationTokenService emailVerificationTokenService)
+    IOneTimeCodeService oneTimeCodeService)
     : IRequestHandler<VerifyEmailCommandRequest, VerifyEmailCommandResponse>
 {
     public async Task<VerifyEmailCommandResponse> Handle(
@@ -34,7 +34,7 @@ public sealed class VerifyEmailCommandHandler(
             };
         }
 
-        var codeHash = emailVerificationTokenService.HashCode(code);
+        var codeHash = oneTimeCodeService.HashCode(code);
 
         var verificationCode = await context.UserEmailVerificationCodes
             .Where(verificationCode =>

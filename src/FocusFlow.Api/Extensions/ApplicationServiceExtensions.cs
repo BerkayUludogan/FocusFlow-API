@@ -27,7 +27,6 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IAuthBusinessRules, AuthBusinessRules>();
         services.AddScoped<ITaskItemBusinessRules, TaskItemBusinessRules>();
         services.AddScoped<IPomodoroSessionBusinessRules, PomodoroSessionBusinessRules>();
-
-
+        services.AddScoped<IOneTimeCodeService, OneTimeCodeService>();
     }
 }

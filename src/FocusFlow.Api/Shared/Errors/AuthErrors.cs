@@ -16,5 +16,8 @@ public static class AuthErrors
     public const string EmailNotVerified = "Auth.EmailNotVerified";
     public const string EmailVerificationCodeRecentlySent = "Auth.EmailVerificationCodeRecentlySent";
     public const string EmailVerificationCodeRequestLimitExceeded = "Auth.EmailVerificationCodeRequestLimitExceeded";
-
+    public const string PasswordResetCodeRecentlySent = "Auth.PasswordResetCodeRecentlySent";
+    public const string PasswordResetCodeRequestLimitExceeded = "Auth.PasswordResetCodeRequestLimitExceeded";
+    public const string PasswordResetCodeInvalid = "Auth.PasswordResetCodeInvalid";
+    public const string PasswordResetCodeExpired = "Auth.PasswordResetCodeExpired";
 }
