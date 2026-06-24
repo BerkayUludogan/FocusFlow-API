@@ -1,12 +1,14 @@
-﻿using System.Security.Cryptography;
-using System.Text;
+﻿using FocusFlow.Api.Infrastructure.Email;
 using FocusFlow.Api.Shared.Abstractions.Email;
+using Microsoft.Extensions.Options;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace FocusFlow.Api.Infrastructure.EmailVerification;
 
-public sealed class EmailVerificationTokenService : IEmailVerificationTokenService
+public sealed class EmailVerificationTokenService(IOptions<EmailSettings> options) : IEmailVerificationTokenService
 {
-    private const int ExpirationMinutes = 10;
+    private readonly EmailSettings _settings = options.Value;
 
     public EmailVerificationTokenDto CreateCode()
     {
@@ -16,7 +18,7 @@ public sealed class EmailVerificationTokenService : IEmailVerificationTokenServi
         {
             RawCode = rawCode,
             CodeHash = HashCode(rawCode),
-            ExpiresAtUtc = DateTime.UtcNow.AddMinutes(ExpirationMinutes)
+            ExpiresAtUtc = DateTime.UtcNow.AddMinutes(_settings.VerificationCodeExpirationMinutes)
         };
     }
 

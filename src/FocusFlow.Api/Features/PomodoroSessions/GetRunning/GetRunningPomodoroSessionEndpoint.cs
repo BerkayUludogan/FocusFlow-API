@@ -17,7 +17,7 @@ public sealed class GetRunningPomodoroSessionEndpoint : IEndpoint
             var response = await sender.Send(new GetRunningPomodoroSessionQueryRequest
             {
                 UserId = httpContext.User.GetUserId()
-            },cancellationToken);
+            }, cancellationToken);
             return Results.Ok(response);
 
         }).WithTags("Pomodoro Sessions").RequireAuthorization();

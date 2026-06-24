@@ -1,7 +1,7 @@
-﻿using FocusFlow.Api.Domain.Entities; 
+﻿using FocusFlow.Api.Domain.Entities;
 using FocusFlow.Api.Features.TaskItems.Rules;
 using FocusFlow.Api.Persistence.Context;
-using MediatR; 
+using MediatR;
 
 namespace FocusFlow.Api.Features.TaskItems.Create;
 

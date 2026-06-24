@@ -33,5 +33,6 @@ public sealed class UserEmailVerificationTokenEntityConfiguration : BaseEntityCo
 
         builder.HasIndex(token => token.UserId);
         builder.HasIndex(token => new { token.UserId, token.CodeHash });
-        builder.HasQueryFilter(token => !token.IsDeleted);   }
+        builder.HasQueryFilter(token => !token.IsDeleted);
+    }
 }

@@ -9,14 +9,21 @@ namespace FocusFlow.Api.Features.PomodoroSessions.Start
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapPost("/api/pomodoro-sessions/start", async (
-                StartPomodoroSessionCommandRequest request,
+                StartPomodoroSessionRequest request,
                 HttpContext httpContext,
                 ISender sender,
                 CancellationToken cancellationToken) =>
             {
-                request.UserId = httpContext.User.GetUserId();
+                var command = new StartPomodoroSessionCommandRequest
+                {
+                    UserId = httpContext.User.GetUserId(),
+                    ClientId = request.ClientId,
+                    DurationMinutes = request.DurationMinutes,
+                    TaskItemId = request.TaskItemId,
+                    Type = request.Type
+                };
 
-                var response = await sender.Send(request, cancellationToken);
+                var response = await sender.Send(command, cancellationToken);
 
                 return Results.Created($"/api/pomodoro-sessions/{response.Id}", response);
             }).WithTags("Pomodoro Sessions").RequireAuthorization();

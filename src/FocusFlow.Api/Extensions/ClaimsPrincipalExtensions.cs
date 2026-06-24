@@ -12,7 +12,7 @@ public static class ClaimsPrincipalExtensions
 
         if (!Guid.TryParse(userId, out var parsedUserId))
             throw new BusinessRuleException(AuthErrors.InvalidToken);
-        
+
         return parsedUserId;
     }
 }

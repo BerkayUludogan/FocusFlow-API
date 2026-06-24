@@ -1,5 +1,5 @@
 using FocusFlow.Api;
-using FocusFlow.Api.Extensions; 
+using FocusFlow.Api.Extensions;
 using FocusFlow.Api.Shared.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,10 +24,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
- 
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapEndpoints();
 
-app.Run();  
+app.Run();

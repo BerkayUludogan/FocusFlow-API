@@ -21,6 +21,6 @@ public sealed class GetWeeklyDashboardEndpoint : IEndpoint
             return Results.Ok(response);
 
         }).WithTags("Dashboard")
-        .RequireAuthorization(); 
+        .RequireAuthorization();
     }
 }
