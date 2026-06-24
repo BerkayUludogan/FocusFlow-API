@@ -1,5 +1,5 @@
 ﻿using FocusFlow.Api.Features.Auth.Rules;
-using FocusFlow.Api.Persistence.Context; 
+using FocusFlow.Api.Persistence.Context;
 using FocusFlow.Api.Shared.Abstractions.Security;
 using FocusFlow.Api.Shared.Errors;
 using FocusFlow.Api.Shared.Exceptions;

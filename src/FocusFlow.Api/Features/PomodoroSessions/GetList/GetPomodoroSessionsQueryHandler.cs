@@ -1,4 +1,5 @@
 ﻿using FocusFlow.Api.Persistence.Context;
+using FocusFlow.Api.Shared.Pagination;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,30 +7,32 @@ namespace FocusFlow.Api.Features.PomodoroSessions.GetList;
 
 public sealed class GetPomodoroSessionsQueryHandler
     (FocusFlowDbContext dbContext)
-    : IRequestHandler<GetPomodoroSessionsQueryRequest, IReadOnlyList<GetPomodoroSessionsQueryResponse>>
+    : IRequestHandler<GetPomodoroSessionsQueryRequest, PagedResponse<GetPomodoroSessionsQueryResponse>>
 {
-    public async Task<IReadOnlyList<GetPomodoroSessionsQueryResponse>> Handle(GetPomodoroSessionsQueryRequest request, CancellationToken cancellationToken)
+    public async Task<PagedResponse<GetPomodoroSessionsQueryResponse>> Handle(GetPomodoroSessionsQueryRequest request, CancellationToken cancellationToken)
     {
         var query = dbContext.PomodoroSessions
                     .AsNoTracking()
                     .Where(session => session.UserId == request.UserId)
-                    .ApplyFilters(request);
-
-        return await query
-            .OrderByDescending(x => x.StartedAtUtc)
-            .Select(x => new GetPomodoroSessionsQueryResponse
+                    .ApplyFilters(request)
+                    .OrderByDescending(session => session.StartedAtUtc)
+            .Select(session => new GetPomodoroSessionsQueryResponse
             {
-                Id = x.Id,
-                ClientId = x.ClientId,
-                TaskItemId = x.TaskItemId,
-                TaskTitle = x.TaskItem != null ? x.TaskItem.Title : null,
-                Type = x.Type,
-                Status = x.Status,
-                StartedAtUtc = x.StartedAtUtc,
-                EndedAtUtc = x.EndedAtUtc,
-                DurationMinutes = x.DurationMinutes,
-                CreatedAtUtc = x.CreatedAtUtc
-            }).ToListAsync(cancellationToken);
+                Id = session.Id,
+                ClientId = session.ClientId,
+                TaskItemId = session.TaskItemId,
+                TaskTitle = session.TaskItem != null ? session.TaskItem.Title : null,
+                Type = session.Type,
+                Status = session.Status,
+                StartedAtUtc = session.StartedAtUtc,
+                EndedAtUtc = session.EndedAtUtc,
+                DurationMinutes = session.DurationMinutes,
+                CreatedAtUtc = session.CreatedAtUtc
+            });
 
+        return await query.ToPagedResponseAsync(
+             request.Page,
+             request.PageSize,
+             cancellationToken);
     }
 }
