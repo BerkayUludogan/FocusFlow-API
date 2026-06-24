@@ -11,7 +11,7 @@ public sealed class UserPasswordResetCodeEntityConfiguration
     public override void Configure(EntityTypeBuilder<UserPasswordResetCodeEntity> builder)
     {
         base.Configure(builder);
-        
+
         builder.ToTable("user_password_reset_codes");
 
         builder.Property(code => code.UserId)

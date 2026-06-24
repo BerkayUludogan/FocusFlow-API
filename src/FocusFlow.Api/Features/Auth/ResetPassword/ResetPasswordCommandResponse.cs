@@ -2,5 +2,5 @@
 
 public sealed class ResetPasswordCommandResponse
 {
-    public bool Success{ get; set; } 
+    public bool Success { get; set; }
 }

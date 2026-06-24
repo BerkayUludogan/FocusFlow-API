@@ -1,14 +1,18 @@
 ﻿using FocusFlow.Api.Persistence.Context;
+using FocusFlow.Api.Shared.Pagination;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace FocusFlow.Api.Features.TaskItems.GetList;
 
-public sealed class GetTaskItemsQueryHandler(FocusFlowDbContext dbContext) : IRequestHandler<GetTaskItemsQueryRequest, List<GetTaskItemsQueryResponse>>
+public sealed class GetTaskItemsQueryHandler(FocusFlowDbContext dbContext)
+    : IRequestHandler<GetTaskItemsQueryRequest, PagedResponse<GetTaskItemsQueryResponse>>
 {
-    public async Task<List<GetTaskItemsQueryResponse>> Handle(GetTaskItemsQueryRequest request, CancellationToken cancellationToken)
+    public async Task<PagedResponse<GetTaskItemsQueryResponse>> Handle(
+        GetTaskItemsQueryRequest request,
+        CancellationToken cancellationToken)
     {
-        var taskItems = await dbContext.TaskItems
+        var query = dbContext.TaskItems
             .AsNoTracking()
             .Where(task => task.UserId == request.UserId)
             .OrderBy(task => task.IsCompleted)
@@ -26,8 +30,11 @@ public sealed class GetTaskItemsQueryHandler(FocusFlowDbContext dbContext) : IRe
                 CompletedPomodoroCount = task.CompletedPomodoroCount,
                 CreatedAtUtc = task.CreatedAtUtc,
                 ModifiedAtUtc = task.ModifiedAtUtc
-            }).ToListAsync(cancellationToken);
+            });
 
-        return taskItems;
+        return await query.ToPagedResponseAsync(
+            request.Page,
+            request.PageSize,
+            cancellationToken);
     }
 }

@@ -9,17 +9,22 @@ public sealed class GetTaskItemsEndpoint : IEndpoint
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("/api/tasks", async (
+            int? page,
+            int? pageSize,
             HttpContext httpContext,
             ISender sender,
-            CancellationToken cancellationToken
-            ) =>
+            CancellationToken cancellationToken) =>
         {
             var response = await sender.Send(new GetTaskItemsQueryRequest
             {
-                UserId = httpContext.User.GetUserId()
+                UserId = httpContext.User.GetUserId(),
+                Page = page ?? 1,
+                PageSize = pageSize ?? 20
             }, cancellationToken);
-            return Results.Ok(response);
 
-        }).WithTags("Task Items").RequireAuthorization();
+            return Results.Ok(response);
+        })
+        .WithTags("Task Items")
+        .RequireAuthorization();
     }
 }

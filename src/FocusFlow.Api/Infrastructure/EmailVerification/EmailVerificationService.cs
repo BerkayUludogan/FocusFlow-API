@@ -10,7 +10,7 @@ using System.Net;
 namespace FocusFlow.Api.Infrastructure.EmailVerification;
 
 public sealed class EmailVerificationService(
-    FocusFlowDbContext dbContext, 
+    FocusFlowDbContext dbContext,
     IOneTimeCodeService oneTimeCodeService,
     IEmailSender emailSender,
     IOptions<EmailSettings> options)

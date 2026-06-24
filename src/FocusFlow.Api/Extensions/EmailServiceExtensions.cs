@@ -41,7 +41,7 @@ public static class EmailServiceExtensions
         {
             services.AddScoped<IEmailSender, SmtpEmailSender>();
         }
-        
+
         services.AddScoped<IEmailVerificationService, EmailVerificationService>();
         services.AddScoped<IPasswordResetService, PasswordResetService>();
     }

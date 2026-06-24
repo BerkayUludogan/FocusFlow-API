@@ -15,6 +15,8 @@ public sealed class GetPomodoroSessionsEndpoint : IEndpoint
             Guid? taskItemId,
             PomodoroSessionType? type,
             PomodoroSessionStatus? status,
+            int? page,
+            int? pageSize,
             HttpContext httpContext,
             ISender sender,
             CancellationToken cancellationToken
@@ -28,9 +30,12 @@ public sealed class GetPomodoroSessionsEndpoint : IEndpoint
                 TaskItemId = taskItemId,
                 Type = type,
                 Status = status,
+                Page = page ?? 1,
+                PageSize = pageSize ?? 20
             }, cancellationToken);
 
             return Results.Ok(response);
+
         }).WithTags("Pomodoro Sessions").RequireAuthorization();
     }
 }

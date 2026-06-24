@@ -17,6 +17,6 @@ public sealed class ResetPasswordEndpoint : IEndpoint
 
             return Results.Ok(response);
         })
-        .WithTags("Auth").RequireRateLimiting(RateLimitingServiceExtensions.AuthPolicy); 
+        .WithTags("Auth").RequireRateLimiting(RateLimitingServiceExtensions.AuthPolicy);
     }
 }
