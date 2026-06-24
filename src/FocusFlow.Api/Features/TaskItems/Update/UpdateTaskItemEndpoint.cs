@@ -10,16 +10,23 @@ public sealed class UpdateTaskItemEndpoint : IEndpoint
     {
         app.MapPut("/api/tasks/{id:guid}", async (
             Guid id,
-            UpdateTaskItemCommandRequest request,
+            UpdateTaskItemRequest request,
             HttpContext httpContext,
             ISender sender,
             CancellationToken cancellationToken) =>
         {
+            var command = new UpdateTaskItemCommandRequest
+            {
+                Id = id,
+                UserId = httpContext.User.GetUserId(),
+                ClientId = request.ClientId,
+                Description = request.Description,
+                DueDateUtc = request.DueDateUtc,
+                EstimatedPomodoroCount = request.EstimatedPomodoroCount,
+                Title = request.Title
+            };
 
-            request.Id = id;
-            request.UserId = httpContext.User.GetUserId();
-
-            var response = await sender.Send(request, cancellationToken);
+            var response = await sender.Send(command, cancellationToken);
 
             return Results.Ok(response);
 

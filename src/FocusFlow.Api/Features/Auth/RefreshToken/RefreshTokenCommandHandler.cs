@@ -20,9 +20,10 @@ public sealed class RefreshTokenCommandHandler(
             );
 
         user = rules.RefreshTokenMustExist(user);
+
         rules.UserMustBeActive(user);
         rules.RefreshTokenMustNotBeExpired(user);
-
+        rules.UserEmailMustBeVerified(user);
 
         var token = tokenService.CreateToken(user);
         user.RefreshToken = token.RefreshToken;

@@ -6,7 +6,7 @@ namespace FocusFlow.Api.Features.TaskItems.Rules
     {
         Task ClientIdMustBeUniqueAsync(Guid userId, Guid clientId,
             CancellationToken cancellationToken);
-        Task<TaskItemEntity> TaskItemMustExistAsync(Guid userId,Guid taskItemId,
+        Task<TaskItemEntity> TaskItemMustExistAsync(Guid userId, Guid taskItemId,
             CancellationToken cancellationToken);
     }
 }

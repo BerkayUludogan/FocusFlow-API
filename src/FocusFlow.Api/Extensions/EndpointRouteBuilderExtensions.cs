@@ -2,6 +2,7 @@
 using System.Reflection;
 
 namespace FocusFlow.Api.Extensions;
+
 public static class EndpointRouteBuilderExtensions
 {
     public static void MapEndpoints(this IEndpointRouteBuilder app)

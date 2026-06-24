@@ -11,8 +11,17 @@ public static class EmailServiceExtensions
         IConfiguration configuration,
         IHostEnvironment environment)
     {
-        services.Configure<EmailSettings>(
-            configuration.GetSection("Email"));
+        services.AddOptions<EmailSettings>()
+        .Bind(configuration.GetSection("Email"))
+        .Validate(settings => settings.VerificationCodeExpirationMinutes > 0,
+            "Email verification code expiration minutes must be greater than 0.")
+        .Validate(settings => settings.VerificationCodeResendCooldownMinutes > 0,
+            "Email verification code resend cooldown minutes must be greater than 0.")
+        .Validate(settings => settings.VerificationCodeResendLimitWindowMinutes > 0,
+            "Email verification code resend limit window minutes must be greater than 0.")
+        .Validate(settings => settings.VerificationCodeMaxRequestCountInWindow > 0,
+            "Email verification code max request count in window must be greater than 0.")
+        .ValidateOnStart();
 
         if (environment.IsDevelopment())
         {

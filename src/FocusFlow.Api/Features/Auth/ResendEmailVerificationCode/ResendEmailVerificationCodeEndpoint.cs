@@ -18,4 +18,4 @@ public sealed class ResendEmailVerificationCodeEndpoint : IEndpoint
         })
         .WithTags("Auth");
     }
-} 
+}

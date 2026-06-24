@@ -9,4 +9,8 @@ public sealed class EmailSettings
     public string FromEmail { get; set; } = string.Empty;
     public string FromName { get; set; } = string.Empty;
     public bool UseSsl { get; set; }
+    public int VerificationCodeExpirationMinutes { get; set; }
+    public int VerificationCodeResendCooldownMinutes { get; set; }
+    public int VerificationCodeResendLimitWindowMinutes { get; set; }
+    public int VerificationCodeMaxRequestCountInWindow { get; set; }
 }
