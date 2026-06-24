@@ -2,6 +2,7 @@
 using FocusFlow.Api.Infrastructure.Email;
 using FocusFlow.Api.Persistence.Context;
 using FocusFlow.Api.Shared.Abstractions.Email;
+using FocusFlow.Api.Shared.Abstractions.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Net;
@@ -9,8 +10,8 @@ using System.Net;
 namespace FocusFlow.Api.Infrastructure.EmailVerification;
 
 public sealed class EmailVerificationService(
-    FocusFlowDbContext dbContext,
-    IEmailVerificationTokenService emailVerificationTokenService,
+    FocusFlowDbContext dbContext, 
+    IOneTimeCodeService oneTimeCodeService,
     IEmailSender emailSender,
     IOptions<EmailSettings> options)
     : IEmailVerificationService
@@ -35,7 +36,7 @@ public sealed class EmailVerificationService(
             activeVerificationCode.ModifiedAtUtc = now;
         }
 
-        var verificationCode = emailVerificationTokenService.CreateCode();
+        var verificationCode = oneTimeCodeService.CreateCode(_settings.VerificationCodeExpirationMinutes);
 
         var emailVerificationCode = new UserEmailVerificationTokenEntity
         {

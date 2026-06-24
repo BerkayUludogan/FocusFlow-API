@@ -21,6 +21,10 @@ public static class ErrorMessageResolver
             [AuthErrors.EmailNotVerified] = "Email adresinizi doğrulamanız gerekiyor.",
             [AuthErrors.EmailVerificationCodeRecentlySent] = "Yeni doğrulama kodu istemeden önce biraz beklemelisiniz.",
             [AuthErrors.EmailVerificationCodeRequestLimitExceeded] = "Çok fazla doğrulama kodu istediniz. Lütfen daha sonra tekrar deneyin.",
+            [AuthErrors.PasswordResetCodeRecentlySent] = "Yeni şifre sıfırlama kodu istemeden önce biraz beklemelisiniz.",
+            [AuthErrors.PasswordResetCodeRequestLimitExceeded] = "Çok fazla şifre sıfırlama kodu istediniz. Lütfen daha sonra tekrar deneyin.",
+            [AuthErrors.PasswordResetCodeInvalid] = "Şifre sıfırlama kodu geçersiz.",
+            [AuthErrors.PasswordResetCodeExpired] = "Şifre sıfırlama kodunun süresi dolmuş.",
 
             [TaskItemErrors.ClientIdAlreadyExists] = "Bu görev zaten senkronize edilmiş.",
             [TaskItemErrors.TaskItemNotFound] = "Görev bulunamadı.",

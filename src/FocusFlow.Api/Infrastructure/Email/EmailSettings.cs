@@ -13,4 +13,10 @@ public sealed class EmailSettings
     public int VerificationCodeResendCooldownMinutes { get; set; }
     public int VerificationCodeResendLimitWindowMinutes { get; set; }
     public int VerificationCodeMaxRequestCountInWindow { get; set; }
+
+    public int PasswordResetCodeExpirationMinutes { get; set; }
+    public int PasswordResetCodeResendCooldownMinutes { get; set; }
+    public int PasswordResetCodeResendLimitWindowMinutes { get; set; }
+    public int PasswordResetCodeMaxRequestCountInWindow { get; set; }
+
 }
