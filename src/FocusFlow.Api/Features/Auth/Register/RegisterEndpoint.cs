@@ -1,4 +1,5 @@
-﻿using FocusFlow.Api.Shared.EndPoints;
+﻿using FocusFlow.Api.Extensions;
+using FocusFlow.Api.Shared.EndPoints;
 using MediatR;
 
 namespace FocusFlow.Api.Features.Auth.Register;
@@ -15,6 +16,6 @@ public sealed class RegisterEndpoint : IEndpoint
             var response = await sender.Send(request, cancellationToken);
 
             return Results.Created($"/api/users/{response.Id}", response);
-        }).WithTags("Auth");
+        }).WithTags("Auth").RequireRateLimiting(RateLimitingServiceExtensions.AuthPolicy);
     }
 }

@@ -27,7 +27,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseRateLimiter();
 app.MapEndpoints();
 
 app.Run();
