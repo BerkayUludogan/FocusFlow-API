@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FocusFlow.Api.Domain.Constants;
 
 namespace FocusFlow.Api.Features.UserPomodoroSettings.Update;
 
@@ -7,18 +8,28 @@ public sealed class UpdateUserPomodoroSettingsCommandValidator : AbstractValidat
     public UpdateUserPomodoroSettingsCommandValidator()
     {
         RuleFor(request => request.FocusDurationMinutes)
-            .InclusiveBetween(1, 180);
+            .InclusiveBetween(
+        PomodoroSettingsLimits.MinFocusDurationMinutes,
+        PomodoroSettingsLimits.MaxFocusDurationMinutes);
 
         RuleFor(request => request.ShortBreakDurationMinutes)
-            .InclusiveBetween(1, 60);
+            .InclusiveBetween(
+                PomodoroSettingsLimits.MinShortBreakDurationMinutes,
+                PomodoroSettingsLimits.MaxShortBreakDurationMinutes);
 
         RuleFor(request => request.LongBreakDurationMinutes)
-            .InclusiveBetween(1, 120);
+            .InclusiveBetween(
+                PomodoroSettingsLimits.MinLongBreakDurationMinutes,
+                PomodoroSettingsLimits.MaxLongBreakDurationMinutes);
 
         RuleFor(request => request.LongBreakInterval)
-            .InclusiveBetween(1, 20);
+            .InclusiveBetween(
+                PomodoroSettingsLimits.MinLongBreakInterval,
+                PomodoroSettingsLimits.MaxLongBreakInterval);
 
         RuleFor(request => request.DailyFocusGoalMinutes)
-            .InclusiveBetween(1, 1440);
+            .InclusiveBetween(
+                PomodoroSettingsLimits.MinDailyFocusGoalMinutes,
+                PomodoroSettingsLimits.MaxDailyFocusGoalMinutes);
     }
 }
