@@ -6,6 +6,5 @@ public sealed class StartPomodoroSessionRequest
 {
     public Guid ClientId { get; set; }
     public Guid? TaskItemId { get; set; }
-    public PomodoroSessionType Type { get; set; }
-    public int DurationMinutes { get; set; }
+    public PomodoroSessionType Type { get; set; } 
 }

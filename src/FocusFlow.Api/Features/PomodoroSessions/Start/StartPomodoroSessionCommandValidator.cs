@@ -12,10 +12,7 @@ public sealed class StartPomodoroSessionCommandValidator : AbstractValidator<Sta
 
         RuleFor(request => request.Type)
             .IsInEnum();
-
-        RuleFor(request => request.DurationMinutes)
-            .InclusiveBetween(1, 180);
-
+         
         When(request => request.Type == PomodoroSessionType.Focus, () =>
         {
             RuleFor(request => request.TaskItemId)

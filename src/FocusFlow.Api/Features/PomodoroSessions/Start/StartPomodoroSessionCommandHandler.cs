@@ -1,20 +1,30 @@
 ﻿using FocusFlow.Api.Domain.Entities;
 using FocusFlow.Api.Domain.Enums;
+using FocusFlow.Api.Domain.Services;
 using FocusFlow.Api.Features.PomodoroSessions.Rules;
 using FocusFlow.Api.Persistence.Context;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace FocusFlow.Api.Features.PomodoroSessions.Start;
 
 public sealed class StartPomodoroSessionCommandHandler(
-    FocusFlowDbContext dbContext, IPomodoroSessionBusinessRules rules) : IRequestHandler<StartPomodoroSessionCommandRequest, StartPomodoroSessionCommandResponse>
+    FocusFlowDbContext dbContext,
+    IPomodoroSessionBusinessRules rules)
+    : IRequestHandler<StartPomodoroSessionCommandRequest, StartPomodoroSessionCommandResponse>
 {
-    public async Task<StartPomodoroSessionCommandResponse> Handle(StartPomodoroSessionCommandRequest request, CancellationToken cancellationToken)
+    public async Task<StartPomodoroSessionCommandResponse> Handle(
+        StartPomodoroSessionCommandRequest request,
+        CancellationToken cancellationToken)
     {
         await rules.ClientIdMustBeUniqueAsync(request.UserId, request.ClientId, cancellationToken);
         await rules.UserMustNotHaveRunningSessionAsync(request.UserId, cancellationToken);
         await rules.TaskItemMustBelongToUserAsync(request.UserId, request.TaskItemId, cancellationToken);
 
+        var settings = await dbContext.UserPomodoroSettings
+            .FirstOrDefaultAsync(settings => settings.UserId == request.UserId, cancellationToken);
+
+        var durationMinutes = PomodoroSessionDurationResolver.Resolve(request.Type, settings);
         var now = DateTime.UtcNow;
 
         var pomodoroSession = new PomodoroSessionEntity
@@ -26,7 +36,7 @@ public sealed class StartPomodoroSessionCommandHandler(
             Type = request.Type,
             Status = PomodoroSessionStatus.Running,
             StartedAtUtc = now,
-            DurationMinutes = request.DurationMinutes
+            DurationMinutes = durationMinutes
         };
 
         await dbContext.PomodoroSessions.AddAsync(pomodoroSession, cancellationToken);
@@ -42,7 +52,5 @@ public sealed class StartPomodoroSessionCommandHandler(
             StartedAtUtc = pomodoroSession.StartedAtUtc,
             DurationMinutes = pomodoroSession.DurationMinutes
         };
-
-
     }
 }

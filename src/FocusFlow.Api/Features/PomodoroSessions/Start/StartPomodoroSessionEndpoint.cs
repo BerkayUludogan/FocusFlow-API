@@ -17,8 +17,7 @@ namespace FocusFlow.Api.Features.PomodoroSessions.Start
                 var command = new StartPomodoroSessionCommandRequest
                 {
                     UserId = httpContext.User.GetUserId(),
-                    ClientId = request.ClientId,
-                    DurationMinutes = request.DurationMinutes,
+                    ClientId = request.ClientId, 
                     TaskItemId = request.TaskItemId,
                     Type = request.Type
                 };
